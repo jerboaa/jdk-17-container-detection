@@ -2,7 +2,7 @@
 
 This repository contains resource files used for the OpenJDK 17 container
 detection screencast illustrating cgroups v2 support on an Red Hat Enterprise
-Linux 9 system with and Minikube installed.
+Linux 9 system with Minikube installed.
 
 ## Demo Application Deployment
 
@@ -16,7 +16,7 @@ $ kubectl create -f fedora-undertow-jdk17.yaml && \
   kubectl get service fedora-undertow-jdk17
 ```
 
-Access the endpoint via the external IP address shows via the last `kubectl get service` command. For example:
+Access the endpoint via the external IP address (shown via the last `kubectl get service` command). For example:
 
 ```
 $ curl -w '\n' http://10.109.124.25:8080
