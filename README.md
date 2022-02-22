@@ -49,7 +49,7 @@ The demo uses the following two options for a) container trace logging and b) gc
 |JVM Option | Description |
 |---------------------------|---------------------------------|
 |`-Xlog:os+container=trace` | Turns on container trace level logging |
-|`-Xlog:gc=info             | Turns on GC info level logging  |
+|`-Xlog:gc=info`            | Turns on GC info level logging  |
 
 ## Describe Kubernetes Deployment
 
@@ -65,6 +65,27 @@ In order to see full logs of the deployed pod use (uses alias `fedora-undertow-j
 
 ```
 $ kubectl logs --tail=-1 $(fedora-undertow-jdk17-pod)
+[0.026s][trace][os,container] OSContainer::init: Initializing Container Support
+[0.028s][debug][os,container] Detected cgroups v2 unified hierarchy
+[0.028s][trace][os,container] Path to /memory.max is /sys/fs/cgroup//memory.max
+[0.028s][trace][os,container] Raw value for memory limit is: 2147483648
+[0.028s][trace][os,container] Memory Limit is: 2147483648
+[0.028s][info ][os,container] Memory Limit is: 2147483648
+[0.028s][trace][os,container] Path to /cpu.max is /sys/fs/cgroup//cpu.max
+[0.028s][trace][os,container] Raw value for CPU quota is: 300000
+[0.028s][trace][os,container] CPU Quota is: 300000
+[0.028s][trace][os,container] Path to /cpu.max is /sys/fs/cgroup//cpu.max
+[0.029s][trace][os,container] CPU Period is: 100000
+[0.029s][trace][os,container] Path to /cpu.weight is /sys/fs/cgroup//cpu.weight
+[0.029s][trace][os,container] Raw value for CPU shares is: 39
+[0.029s][trace][os,container] Scaled CPU shares value is: 1024
+[0.029s][debug][os,container] CPU Shares is: 1024
+[0.029s][trace][os,container] CPU Quota count based on quota/period: 3
+[0.029s][trace][os,container] CPU Share count based on shares: 1
+[0.029s][trace][os,container] OSContainer::active_processor_count: 3
+[0.029s][trace][os,container] CgroupSubsystem::active_processor_count (cached): 3
+[0.036s][trace][os,container] CgroupSubsystem::active_processor_count (cached): 3
+[0.041s][info ][gc          ] Using G1
 ```
 
 Restricting this to the first 10 lines of log output will show the relevant container trace output. Feel free to adjust the `-nXX` option to your needs:
@@ -81,7 +102,6 @@ $ kubectl logs --tail=-1 $(fedora-undertow-jdk17-pod) | head -n10
 [0.022s][trace][os,container] Raw value for CPU quota is: 300000
 [0.022s][trace][os,container] CPU Quota is: 300000
 [0.022s][trace][os,container] Path to /cpu.max is /sys/fs/cgroup//cpu.max
-[...]
 ```
 
 ## Inspecting GC Info Logs
