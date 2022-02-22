@@ -1,0 +1,38 @@
+Simple JDK 17 "Hello World" deployment on RHEL 9 + Minikube
+-----------------------------------------------------------
+
+cat /etc/os-release
+
+kubectl create -f fedora-undertow-jdk17.yaml && \
+kubectl expose deployment fedora-undertow-jdk17 --type=LoadBalancer --port=8080 && \
+kubectl get service fedora-undertow-jdk17
+
+kubectl describe deployment fedora-undertow-jdk17
+
+curl -w '\n' http:// <service>
+
+kubectl get pods -l app=fedora-undertow-jdk17 -o custom-columns=POD:.metadata.name
+alias fedora-undertow-jdk17-pod='kubectl get pod -l app=fedora-undertow-jdk17 -o custom-columns=POD:.metadata.name | tail -n1'
+fedora-undertow-jdk17-pod
+
+Show GC selection depending on resource quota:
+----------------------------------------------
+kubectl describe deployment fedora-undertow-jdk17
+
+<show-resource-quota>
+
+kubectl get deployment fedora-undertow-jdk17 -o yaml > fedora-undertow-jdk17.yaml
+kubectl logs --tail=-1 $(fedora-undertow-jdk17-pod) | grep Using
+kubectl logs --tail=-1 $(fedora-undertow-jdk17-pod) | head -n10
+
+<edit-resource-quota>
+
+kubectl replace -f fedora-undertow-jdk17.yaml
+kubectl logs --tail=-1 $(fedora-undertow-jdk17-pod) | grep Using
+kubectl logs --tail=-1 $(fedora-undertow-jdk17-pod) | head -n10
+
+
+VM.info jcmd:
+-------------
+
+kubectl exec $(fedora-undertow-jdk17-pod) -- jcmd 1 VM.info | grep -A13 '(cgroup)'
