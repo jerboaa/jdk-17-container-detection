@@ -49,7 +49,6 @@ The demo uses the following two options for a) container trace logging and b) gc
 |JVM Option | Description |
 |---------------------------|---------------------------------|
 |`-Xlog:os+container=trace` | Turns on container trace level logging |
-|---------------------------|---------------------------------|
 |`-Xlog:gc=info             | Turns on GC info level logging  |
 
 ## Describe Kubernetes Deployment
